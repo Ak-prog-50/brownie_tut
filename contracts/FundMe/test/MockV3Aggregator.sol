@@ -24,7 +24,7 @@ contract MockV3Aggregator is AggregatorV2V3Interface {
     mapping(uint256 => uint256) private getStartedAt;
 
     constructor(uint8 _decimals, int256 _initialAnswer) public {
-        decimals = _decimals;
+        decimals = _decimals;  // Decimal count is not used anywhere in contract code. Just there to give information.
         updateAnswer(_initialAnswer);
     }
 

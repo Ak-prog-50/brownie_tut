@@ -2,7 +2,9 @@ from brownie import network, config, accounts, MockV3Aggregator
 from web3 import Web3
 
 DECIMALS = 8  #* 8 decimals are the default decimal count added in all Data Feed contracts.
-STARTING_ETH_PRICE = 2000  #* starting input price for the contract's "answer" argument to convert to usd.
+STARTING_PRICE = 2000  #* starting price in USD.
+# notes: MockV3Aggregator can't fetch the Eth/Usd price so STARTING_PRICE acts like the
+# notes: fake USD value of 1 ETHER.
 
 LOCAL_BLOCKCHAIN_ENVIRONMENTS = ["development", "ganache-local"]
 
@@ -17,7 +19,10 @@ def deploy_mocks():
     print(f"The active network is {network.show_active()}")
     print("Deploying Mocks...")
     if (len(MockV3Aggregator) <= 0):
-        MockV3Aggregator.deploy(DECIMALS, Web3.toWei(STARTING_ETH_PRICE, "ether"), {"from": get_account()})
+        # ! Until previous commit Web3.toWei() has been used.
+        # ! That's wrong. B'cos the second parameter of the contract 
+        # ! requires a mock ETH/USD price.
+        MockV3Aggregator.deploy(DECIMALS, STARTING_PRICE, {"from": get_account()})
         print("Mocks Deployed!")
     elif(len(MockV3Aggregator) > 0):
         print("Mocks already deployed!")    
