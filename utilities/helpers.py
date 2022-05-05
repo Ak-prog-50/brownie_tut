@@ -2,7 +2,7 @@ from brownie import network, config, accounts, MockV3Aggregator
 from web3 import Web3
 
 DECIMALS = 8  #* 8 decimals are the default decimal count added in all Data Feed contracts.
-STARTING_PRICE = 2000  #* starting price in USD.
+STARTING_PRICE = 200000000000  #* starting price in USD.
 # notes: MockV3Aggregator can't fetch the Eth/Usd price so STARTING_PRICE acts like the
 # notes: fake USD value of 1 ETHER.
 
