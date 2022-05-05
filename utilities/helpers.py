@@ -1,22 +1,30 @@
 from brownie import network, config, accounts, MockV3Aggregator
+from web3 import Web3
 
 DECIMALS = 18
-STARTING_PRICE = 200000000000
+STARTING_ETH_PRICE = 2000
 
+LOCAL_BLOCKCHAIN_ENVIRONMENTS = ["development", "ganache-local"]
 
 def get_account():
-    if network.show_active() == "development":
+    if network.show_active() in LOCAL_BLOCKCHAIN_ENVIRONMENTS:
         return accounts[0]
     else:
         return accounts.add(config["wallets"]["from_key"])
 
 
-def get_pricefeed():
-    if network.show_active() != "development":
-        return config["networks"]["rinkeby"]["eth_usd_price_feed"]
-    else:
-        print(f"The active network is {network.show_active()}")
-        print("Deploying Mocks...")
-        mockV3 = MockV3Aggregator.deploy(DECIMALS, STARTING_PRICE, {"from": get_account()})
+def deploy_mocks():
+    print(f"The active network is {network.show_active()}")
+    print("Deploying Mocks...")
+    if (len(MockV3Aggregator) <= 0):
+        MockV3Aggregator.deploy(DECIMALS, Web3.toWei(STARTING_ETH_PRICE, "ether"), {"from": get_account()})
         print("Mocks Deployed!")
-        return mockV3.address
+    elif(len(MockV3Aggregator) > 0):
+        print("Mocks already deployed!")    
+
+def get_pricefeed():
+    if network.show_active() not in LOCAL_BLOCKCHAIN_ENVIRONMENTS:
+        return config["networks"][network.show_active()]["eth_usd_price_feed"]
+    else:
+        deploy_mocks()
+        return MockV3Aggregator[-1].address
