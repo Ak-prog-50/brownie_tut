@@ -57,6 +57,23 @@ contract FundMe {
         return ethAmountInUsd;
     }
     
+    function getEntranceFee() public view returns (uint256) {
+        /**@dev This function should return the minimum USD value converted to wei */
+
+        uint256 minimumUSD = 50 * 10**18;
+        uint256 price = getPrice();
+        uint256 precision = 1 * 10**18;
+        // return (minimumUSD * precision) / price;
+        /**@dev We fixed a rounding error found in the video by adding one!*/
+        return ((minimumUSD * precision) / price) + 1;
+
+        //* This is better than the previous code I think. But have to deal with the extra decimals. 
+        //* 8 decimals from the Mockv3 and another 10 from instructor.
+        // uint256 oneUsdInWei = (1 * 10**18) / (price / 10**18);
+        // uint256 fiftyUSDInWei = oneUsdInWei * 50;
+        // return fiftyUSDInWei;
+    }
+
     //modifier: https://medium.com/coinmonks/solidity-tutorial-all-about-modifiers-a86cf81c14cb
     modifier onlyOwner {
     	//is the message sender owner of the contract?
