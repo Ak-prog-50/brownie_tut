@@ -46,13 +46,13 @@ contract FundMe {
     function getPrice() public view returns(uint256){
         (,int256 answer,,,) = priceFeed.latestRoundData();
          // ETH/USD rate in 18 digit 
-         return uint256(answer * 10000000000);
+         return uint256(answer * 10000000000);  //* answer eqls to ETH price in USD with 8 decimals. In here answer is set to have 18 digits just because instructor's preference.
     }
     
     // 1000000000
     function getConversionRate(uint256 ethAmount) public view returns (uint256){
-        uint256 ethPrice = getPrice();
-        uint256 ethAmountInUsd = (ethPrice * ethAmount) / 1000000000000000000;
+        uint256 ethPriceInUsd = getPrice();
+        uint256 ethAmountInUsd = (ethPriceInUsd * ethAmount) / 1000000000000000000;  //* divided by 10^18 to account for 8 decimals added default by Data Feed Contract + instructor added 10 decimals for apparently no reason.
         // the actual ETH/USD conversation rate, after adjusting the extra 0s.
         return ethAmountInUsd;
     }

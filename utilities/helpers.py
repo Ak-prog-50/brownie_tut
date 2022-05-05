@@ -1,8 +1,8 @@
 from brownie import network, config, accounts, MockV3Aggregator
 from web3 import Web3
 
-DECIMALS = 18
-STARTING_ETH_PRICE = 2000
+DECIMALS = 8  #* 8 decimals are the default decimal count added in all Data Feed contracts.
+STARTING_ETH_PRICE = 2000  #* starting input price for the contract's "answer" argument to convert to usd.
 
 LOCAL_BLOCKCHAIN_ENVIRONMENTS = ["development", "ganache-local"]
 

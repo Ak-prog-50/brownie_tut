@@ -56,6 +56,11 @@ contract MockV3Aggregator is AggregatorV2V3Interface {
         view
         override
         returns (
+            // roundId: The round ID.
+            //* answer: The price of one ETH in USD.
+            // startedAt: Timestamp of when the round started.
+            // updatedAt: Timestamp of when the round was updated.
+            // answeredInRound: The round ID of the round in which the answer was computed.
             uint80 roundId,
             int256 answer,
             uint256 startedAt,
