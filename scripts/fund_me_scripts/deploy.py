@@ -1,5 +1,5 @@
 from brownie import FundMe
-from ...utilities.get_account import get_account
+from ...utilities.helpers import get_account
 
 def deploy_fund_me():
     account = get_account()

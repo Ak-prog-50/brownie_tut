@@ -1,5 +1,5 @@
 from brownie import accounts, config, SimpleStorage, network
-from ...utilities.get_account import get_account
+from ...utilities.helpers import get_account
 
 def deploy_simple_storage():
     account = get_account()
